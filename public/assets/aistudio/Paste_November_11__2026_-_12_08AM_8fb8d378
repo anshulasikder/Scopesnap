@@ -1,0 +1,1562 @@
+# MASTER BUILD PROMPT — SCOPESNAP
+## Build a Complete, Production-Structured AI-Powered Freelancer Agreement & Payment Clarity Platform
+
+You are acting as a senior full-stack engineer, software architect, AI engineer, security engineer, QA engineer, and product designer.
+
+Your task is to BUILD a complete, functional application called **ScopeSnap** from the current project workspace.
+
+This is not a request for a UI prototype, landing-page mockup, or static demonstration. Build the actual application, including frontend, backend, database architecture, authentication, AI processing, payment integration, agreement versioning, cryptographic verification, error handling, testing, and documentation.
+
+Work independently. Make sensible engineering decisions without repeatedly asking me for permission. Prioritize correctness, security, reliability, and a complete end-to-end user journey over unnecessary complexity.
+
+Do not stop after generating the landing page or describing the architecture. Implement the application.
+
+---
+
+# 1. PRODUCT VISION
+
+## What is ScopeSnap?
+
+ScopeSnap is an AI-powered freelancer agreement and payment clarity platform.
+
+It converts informal client conversations into structured, evidence-backed agreements that both freelancers and clients can review and confirm.
+
+It connects agreed payment milestones to PayPal, records payment events, generates tamper-evident digital receipts, and helps identify scope changes that occur after an agreement has been confirmed.
+
+The central problem:
+
+Freelancers and clients frequently agree on project scope, deliverables, revisions, deadlines, and payments through informal conversations. Important details become scattered across messages, and misunderstandings arise about what was actually agreed upon.
+
+ScopeSnap helps both parties establish a shared, traceable record of their agreement before work and payment progress.
+
+## Core product promise
+
+**Turn conversations into clear agreements. Connect payments to confirmed milestones. Preserve verifiable evidence when the scope changes.**
+
+## ScopeSnap is NOT:
+
+- An escrow service.
+- A bank or payment processor.
+- A law firm or legal-advice service.
+- A guarantee against disputes, fraud, or non-payment.
+- A system that can independently prove that every extracted statement is legally binding.
+- A system that should label a person dishonest based on AI inference.
+
+Never make these claims in the interface, marketing copy, documentation, or demo.
+
+Use accurate wording such as:
+- Agreement clarity.
+- Evidence-backed terms.
+- Payment milestone tracking.
+- Version history.
+- Tamper-evident receipts.
+- Independent receipt verification.
+- Scope change detection.
+
+---
+
+# 2. OFFICIAL SYNTHETIC DEMO SCENARIO
+
+Use the following scenario consistently throughout the application.
+
+IMPORTANT: Every demo record must be clearly labelled **SYNTHETIC DEMO DATA**. Never represent mock transactions, sample payment IDs, or generated evidence as real client activity or actual PayPal transactions.
+
+### Client
+
+Name: Elena Reyes  
+Organization: Atelier Monolith
+
+### Freelancer
+
+Name: Alex Morgan
+
+### Project
+
+A logo design project.
+
+### Agreed terms
+
+1. Deliver three distinct initial logo concepts.
+2. Include up to two revision rounds.
+3. Final deliverables:
+   - Transparent PNG files.
+   - Adobe Illustrator AI master files.
+4. Total project price: USD 100.
+5. Initial advance payment: USD 50.
+6. Remaining payment: USD 50.
+7. First concept presentation deadline: 7 calendar days from receipt of the initial deposit.
+8. The remaining USD 50 is due once the final files are approved, according to the confirmed agreement.
+
+Do not silently modify these terms.
+
+Do not invent missing client confirmations, payment events, approval messages, or evidence.
+
+If the system needs example conversations, create clearly labelled synthetic conversation messages that support the exact terms above.
+
+---
+
+# 3. REQUIRED TECHNOLOGY ARCHITECTURE
+
+Use the following stack unless a genuine compatibility issue makes a specific component impossible. If you must change something, explain why and preserve equivalent functionality.
+
+### Frontend
+- React.
+- TypeScript.
+- Vite.
+- Responsive CSS.
+- Component-based architecture.
+- Accessible semantic HTML.
+
+### Backend
+- Node.js.
+- Express.
+- TypeScript.
+- REST API.
+- Server-side validation.
+- Centralized error handling.
+
+### Authentication and database
+- Firebase Authentication.
+- Firestore.
+- Firebase Admin SDK on the server.
+- Firestore security rules.
+- User-scoped data access.
+
+### AI
+- Google Gemini API.
+- Use the supported `@google/genai` SDK.
+- Prefer `gemini-2.5-flash` if available in the configured environment.
+- All Gemini API calls must happen server-side.
+
+### Payments
+- PayPal REST API.
+- PayPal Orders v2.
+- PayPal Sandbox for testing.
+- Server-side order creation, approval verification, capture, and reconciliation.
+
+### Cryptography
+- SHA-256 for canonical agreement fingerprints.
+- Ed25519 for digital receipt signatures.
+- Server-side signing only.
+- Independent public-key verification.
+
+### Testing
+- Vitest for unit and integration tests where appropriate.
+- Playwright for browser-based end-to-end tests where available.
+- TypeScript compilation.
+- Build verification.
+- API and security tests.
+
+Do not expose secrets in frontend code, browser bundles, logs, screenshots, or GitHub.
+
+---
+
+# 4. NON-NEGOTIABLE ENGINEERING RULES
+
+These requirements apply to the entire project.
+
+1. Build real functionality, not decorative buttons.
+2. Every visible interactive control must perform its advertised action.
+3. Do not use fake success messages.
+4. Do not create fake authentication.
+5. Do not simulate successful PayPal payments as actual captures.
+6. Do not hardcode a successful AI response when the AI service is unavailable.
+7. Do not expose private keys, API secrets, Firebase Admin credentials, or PayPal secrets in frontend code.
+8. Never trust client-submitted payment status.
+9. Never trust client-submitted agreement fingerprints or signatures.
+10. Validate all API inputs on the server.
+11. Handle missing configuration gracefully.
+12. Handle network failures gracefully.
+13. Handle expired sessions and authorization failures.
+14. Prevent users from accessing other users' private projects.
+15. Preserve agreement versions instead of overwriting confirmed agreements.
+16. Store timestamps consistently in UTC and display them in the user's local timezone.
+17. Avoid duplicate payment captures and duplicate webhook processing.
+18. Use idempotency where supported.
+19. Make error states understandable to ordinary users.
+20. Do not sacrifice data integrity to make the demo appear successful.
+
+If a service is not configured, show a clear status such as:
+
+- Not configured.
+- Sandbox unavailable.
+- Authentication required.
+- Waiting for confirmation.
+- Processing.
+- Needs review.
+- Failed.
+- Demo mode.
+
+Never show a green Connected or Verified indicator unless the relevant verification actually succeeded.
+
+---
+
+# 5. DESIGN SYSTEM AND USER EXPERIENCE
+
+Create a polished, modern fintech/SaaS experience.
+
+The product should feel trustworthy, precise, minimal, and professional.
+
+### Color palette
+
+- Deep Ink: `#151C1B`
+- Warm Paper: `#F4F1E8`
+- Electric Lime: `#D9F36A`
+- Muted Teal: `#648D83`
+- Soft Coral: `#E77B64`
+- Neutral Grey: `#9A9F98`
+
+### Typography
+
+- Space Grotesk for prominent headings.
+- Inter for interface text.
+- IBM Plex Mono for IDs, hashes, technical values, and verification information.
+
+### Visual direction
+
+- Strong visual hierarchy.
+- Clean whitespace.
+- Consistent spacing.
+- Clear typography.
+- Restrained use of accent colors.
+- Subtle borders and shadows.
+- Carefully designed empty states.
+- Professional dashboard cards.
+- Clear status indicators.
+- Responsive layouts for desktop, tablet, and mobile.
+
+Avoid:
+- Generic AI-generated dashboard aesthetics.
+- Excessive gradients.
+- Excessive animation.
+- Unnecessary decorative charts.
+- Fake financial statistics.
+- Inconsistent button styles.
+- Overcrowded screens.
+
+### Main navigation
+
+Use a consistent application shell with:
+
+- ScopeSnap logo.
+- Dashboard.
+- Projects.
+- Agreements.
+- Payments.
+- Verification.
+- Settings.
+- User profile menu.
+
+The navigation must clearly communicate the current page and work across responsive screen sizes.
+
+---
+
+# 6. COMPLETE USER JOURNEY
+
+Build the following user journey in this order.
+
+Do not skip a stage because another stage is easier to implement.
+
+## STAGE 1 — LANDING PAGE
+
+Create a professional landing page explaining the product.
+
+### Navigation
+
+Left:
+- ScopeSnap logo.
+
+Center:
+- How It Works.
+- Features.
+- Security.
+
+Right:
+- Log In.
+- Get Started.
+
+### Hero section
+
+Left side:
+- Small label: AI-POWERED AGREEMENT CLARITY.
+- Main headline: Turn conversations into clear agreements.
+- Supporting description explaining the product.
+- Primary CTA: Get Started.
+- Secondary CTA: See How It Works.
+
+Right side:
+- A realistic product preview showing an agreement summary, milestone information, and verification status.
+
+The preview must be clearly labelled as a product preview or synthetic demo.
+
+### Additional sections
+
+1. The problem.
+2. How ScopeSnap works.
+3. Core features.
+4. Agreement-to-payment workflow.
+5. Security and verification.
+6. Final CTA.
+7. Footer.
+
+Do not use claims such as "zero disputes" or "guaranteed protection".
+
+Test every navigation link and CTA.
+
+---
+
+## STAGE 2 — AUTHENTICATION
+
+Implement real Firebase Authentication.
+
+Required functionality:
+
+- Email and password registration.
+- Email and password login.
+- Google sign-in when correctly configured.
+- Apple sign-in when correctly configured.
+- Forgot password.
+- Email verification.
+- Logout.
+- Session persistence.
+- Protected application routes.
+
+### Requirements
+
+- Validate email formats.
+- Enforce appropriate password requirements.
+- Display useful error messages.
+- Prevent unauthorized access to protected pages.
+- Handle expired sessions.
+- Handle unverified email accounts according to the selected access policy.
+- Show loading states.
+- Prevent repeated submissions while a request is processing.
+
+If Google or Apple authentication is not configured, show a truthful unavailable/configuration state. Do not simulate successful OAuth authentication.
+
+---
+
+## STAGE 3 — FIRST-TIME PRODUCT ONBOARDING
+
+After a user's first successful login, introduce a short interactive walkthrough.
+
+Use a spotlight/tour system.
+
+Highlight actual interface elements, not approximate positions.
+
+Include:
+- Next.
+- Back.
+- Skip.
+- Finish.
+- Progress indicator.
+- Replay onboarding from Settings.
+
+The walkthrough should explain:
+
+1. Dashboard.
+2. Projects.
+3. AI agreement creation.
+4. Evidence review.
+5. Client confirmation.
+6. Payments.
+7. Verification.
+
+The tour must not block ordinary navigation permanently.
+
+Persist completion status per user.
+
+---
+
+## STAGE 4 — DASHBOARD
+
+Create a useful dashboard.
+
+Display:
+
+- Welcome message.
+- Total projects.
+- Active projects.
+- Pending client confirmations.
+- Pending payment milestones.
+- Recently updated agreements.
+- Recent payment events.
+- Recent activity.
+
+Provide quick actions:
+
+- Create Project.
+- Create Agreement.
+- View Payments.
+- Verify Receipt.
+
+### Dashboard reliability
+
+- Use actual user-scoped database records.
+- Display empty states for new accounts.
+- Do not fabricate financial totals.
+- Clearly distinguish synthetic demo data from real user records.
+- Handle loading, error, and empty states separately.
+
+---
+
+## STAGE 5 — PROJECT AND CLIENT MANAGEMENT
+
+Users must be able to:
+
+- Create projects.
+- Edit project metadata.
+- View project details.
+- Archive projects.
+- Associate clients with projects.
+- View project history.
+- Open related agreements.
+- View related payments.
+
+Each project should have:
+
+- Project ID.
+- Project name.
+- Client name.
+- Client email where available.
+- Description.
+- Status.
+- Created timestamp.
+- Updated timestamp.
+- Associated agreement IDs.
+
+Enforce user ownership on every project API.
+
+Do not expose private project data through guessable URLs.
+
+---
+
+## STAGE 6 — CREATE AGREEMENT / AI INTAKE
+
+Create an agreement-generation workflow.
+
+The user should be able to:
+
+1. Select an existing project or create one.
+2. Enter or paste client conversation text.
+3. Add conversation messages individually if necessary.
+4. Provide client and freelancer information.
+5. Submit the conversation for AI extraction.
+
+Provide clear instructions explaining that users should review AI-extracted information before confirming it.
+
+### Conversation source structure
+
+Preserve:
+
+- Message ID.
+- Speaker.
+- Message text.
+- Timestamp if available.
+- Source type.
+
+Never discard the original source text.
+
+The original conversation must remain accessible as evidence.
+
+---
+
+## STAGE 7 — AI EXTRACTION AND EVIDENCE ENGINE
+
+This is one of the most important product components.
+
+Use Gemini server-side to extract agreement terms from conversation messages.
+
+Extract:
+
+- Client identity.
+- Freelancer identity.
+- Project description.
+- Deliverables.
+- Quantity.
+- Revision limits.
+- Total price.
+- Advance payment.
+- Remaining balance.
+- Currency.
+- Payment conditions.
+- Deadline.
+- Timeline conditions.
+- Approval requirements.
+- Missing information.
+- Conflicting statements.
+
+### Critical evidence requirements
+
+Every extracted term must include:
+
+- Extracted value.
+- Exact supporting source quote.
+- Speaker.
+- Source message ID.
+- Confidence or review status.
+- Explanation where review is required.
+
+AI must not invent evidence.
+
+### Evidence validation
+
+Do not trust an LLM-generated quotation just because the model says it came from a message.
+
+Implement deterministic server-side validation:
+
+1. Retrieve the original source message.
+2. Check whether the proposed evidence quote exists in that source.
+3. Validate the source message ID.
+4. Validate the speaker.
+5. Preserve the complete relevant quote.
+6. Reject or flag evidence that cannot be located.
+
+Use explicit statuses:
+
+- `EXACT_MATCH`
+- `NEEDS_REVIEW`
+- `NOT_FOUND`
+- `CONFLICTING_EVIDENCE`
+
+If a term has no supporting quote, it must not be marked as verified.
+
+If multiple messages contradict one another, display the conflict instead of silently choosing one.
+
+Deduplicate repeated terms and evidence where appropriate.
+
+### AI failure handling
+
+If Gemini is unavailable:
+
+- Do not crash the application.
+- Preserve the original conversation.
+- Display an honest service-unavailable state.
+- Allow retry.
+- If a deterministic fallback is implemented, label it clearly as deterministic extraction, not live AI.
+- Never present fallback output as a successful Gemini response.
+
+### Official demo extraction
+
+For the official synthetic demo, extract the exact terms from the supplied synthetic conversation:
+
+- Three distinct initial logo concepts.
+- Up to two revision rounds.
+- Transparent PNG files.
+- Adobe Illustrator AI master files.
+- USD 100 total.
+- USD 50 advance.
+- USD 50 remaining.
+- Seven calendar days from receipt of the initial deposit to first concept presentation.
+
+Do not create unsupported evidence for any of these terms.
+
+---
+
+## STAGE 8 — AGREEMENT REVIEW AND VERSION CONTROL
+
+Build a complete agreement review interface.
+
+Show extracted terms in organized sections:
+
+1. Parties.
+2. Project scope.
+3. Deliverables.
+4. Revisions.
+5. Timeline.
+6. Payment.
+7. Approval conditions.
+8. Evidence.
+
+Allow users to:
+
+- Review terms.
+- Edit incorrect extracted values.
+- Flag uncertain terms.
+- Resolve conflicting evidence.
+- Add missing details.
+- Save drafts.
+- Preview the final agreement.
+
+### Agreement versioning
+
+Every saved agreement version must be immutable after confirmation.
+
+When a material term changes:
+
+- Create a new version.
+- Preserve the previous version.
+- Record who made the change.
+- Record the timestamp.
+- Record the change summary.
+- Require the appropriate parties to review the new version.
+
+Never overwrite an already confirmed version.
+
+### Canonical agreement fingerprint
+
+Implement deterministic canonicalization.
+
+Requirements:
+
+- Use a consistent field order.
+- Normalize supported values.
+- Normalize currency and numeric values.
+- Handle null and optional fields consistently.
+- Exclude volatile UI-only data.
+- Exclude the fingerprint field itself.
+- Serialize deterministically.
+- Generate SHA-256 on the trusted server.
+
+The same logical agreement must generate the same fingerprint.
+
+A changed material term must generate a different fingerprint.
+
+Display the fingerprint using IBM Plex Mono.
+
+Include a copy action.
+
+Do not hardcode a fingerprint.
+
+---
+
+## STAGE 9 — CLIENT REVIEW AND TWO-PARTY CONFIRMATION
+
+Create a secure client-review workflow.
+
+The freelancer should be able to send the client a review link.
+
+The link must use a secure, high-entropy, time-limited token.
+
+Do not expose unrestricted project data through a public URL.
+
+The client should be able to:
+
+- Open the review page.
+- See the agreement terms.
+- Read supporting evidence where appropriate.
+- Review payment milestones.
+- Request corrections.
+- Accept the exact agreement version.
+
+The freelancer should be able to see:
+
+- Waiting for client review.
+- Changes requested.
+- Client confirmed.
+- Confirmation expired.
+- Agreement version status.
+
+### Two-party confirmation
+
+The confirmation record must include:
+
+- Agreement ID.
+- Exact version ID.
+- Exact version fingerprint.
+- Confirming party.
+- Authenticated identity or secure token context.
+- Timestamp.
+- Confirmation status.
+
+A confirmation must apply only to the exact version that was reviewed.
+
+If the agreement changes after confirmation, the old confirmation must not automatically confirm the new version.
+
+Prevent token replay and unauthorized confirmation.
+
+Use secure token storage, expiration, and server-side validation.
+
+Never claim an agreement is mutually confirmed unless both required confirmations exist for the same version.
+
+---
+
+## STAGE 10 — PAYPAL SANDBOX INTEGRATION
+
+Integrate PayPal using the official REST API and Orders v2.
+
+This is a real external integration, not a decorative payment screen.
+
+### Payment flow
+
+1. Check that the agreement is mutually confirmed.
+2. Check the applicable milestone.
+3. Create a PayPal order server-side.
+4. Return the necessary approval URL.
+5. Allow the payer to approve the payment through PayPal.
+6. Capture the payment server-side.
+7. Verify the capture response.
+8. Reconcile the payment with the correct user, project, agreement version, and milestone.
+9. Update the milestone only after verified payment confirmation.
+10. Generate the corresponding receipt.
+
+### Payment milestones for the demo
+
+Initial advance:
+- USD 50.
+
+Remaining balance:
+- USD 50.
+
+Total:
+- USD 100.
+
+Do not allow the remaining milestone to be accidentally marked paid because the advance was paid.
+
+### Security
+
+- PayPal client secret must remain server-side.
+- Validate PayPal API responses.
+- Verify transaction and capture IDs.
+- Use idempotency to prevent duplicate capture attempts.
+- Verify webhook signatures if webhooks are implemented.
+- Prevent client-side payment-status manipulation.
+- Handle cancelled orders.
+- Handle declined payments.
+- Handle pending payments.
+- Handle network timeouts.
+- Handle duplicate webhooks.
+- Handle capture failures.
+- Reconcile the transaction before marking it successful.
+
+### Demo mode
+
+If PayPal credentials are missing:
+
+- Display Sandbox Not Configured.
+- Explain which server-side configuration is missing.
+- Allow the rest of the application to function.
+- Do not invent successful PayPal transaction IDs.
+- Do not create fake capture records that look real.
+
+Synthetic payment examples must be visually labelled as synthetic.
+
+---
+
+## STAGE 11 — PAYMENT RECORDS AND RECONCILIATION
+
+Create a payment history interface.
+
+For every actual payment event, preserve:
+
+- Internal payment ID.
+- PayPal order ID.
+- PayPal capture ID where available.
+- Amount.
+- Currency.
+- Milestone.
+- Payment status.
+- Related project.
+- Related agreement version.
+- Payer.
+- Timestamp.
+- Reconciliation status.
+
+Use accurate payment states:
+
+- Created.
+- Awaiting approval.
+- Approved.
+- Capturing.
+- Captured.
+- Pending.
+- Failed.
+- Cancelled.
+- Refunded, if supported and verified.
+
+Do not treat an order as captured merely because it was approved.
+
+Do not mark a payment successful based only on frontend callbacks.
+
+Maintain an auditable event history.
+
+---
+
+## STAGE 12 — TAMPER-EVIDENT DIGITAL RECEIPT
+
+After a payment has been successfully reconciled, generate a receipt.
+
+Receipt information should include:
+
+- Receipt ID.
+- Project ID.
+- Agreement ID.
+- Agreement version.
+- Agreement fingerprint.
+- Payment milestone.
+- Amount and currency.
+- PayPal order ID.
+- PayPal capture ID, where available.
+- Payment timestamp.
+- Receipt creation timestamp.
+- Signing key identifier.
+- Digital signature.
+- Public verification key reference.
+
+### Cryptographic design
+
+Use SHA-256 for receipt payload hashing.
+
+Use Ed25519 for signing.
+
+Private signing keys must never be sent to the frontend.
+
+The server signs the canonical receipt payload.
+
+Store the signed receipt and its associated metadata.
+
+A receipt must not be generated as a verified payment receipt when payment reconciliation has failed.
+
+### Verification
+
+Build an independent verification page.
+
+A user should be able to submit or open a receipt and verify:
+
+1. Receipt structure.
+2. Payload hash.
+3. Digital signature.
+4. Signing public key.
+5. Agreement fingerprint reference.
+6. Receipt integrity.
+
+Display distinct outcomes:
+
+- Valid signature and unchanged receipt.
+- Invalid signature.
+- Payload modified.
+- Unknown signing key.
+- Incomplete receipt.
+- Verification unavailable.
+
+Never claim that a valid digital signature proves the underlying transaction is legally valid or that the freelancer completed the work.
+
+### Public verification
+
+The verification page must expose only the information necessary to verify the receipt.
+
+Do not reveal private conversations, personal information, credentials, or unrelated project data.
+
+---
+
+## STAGE 13 — SCOPE CHANGE SENTINEL
+
+This is a core differentiating feature.
+
+After an agreement has been confirmed, allow users to submit new client messages or proposed changes.
+
+Compare the new content against the confirmed agreement version.
+
+Detect potential changes to:
+
+- Deliverables.
+- Quantity.
+- Revisions.
+- Price.
+- Timeline.
+- Payment conditions.
+- Approval requirements.
+- Other material scope terms.
+
+### Example
+
+Original agreement:
+Three initial logo concepts.
+
+New client message:
+"Can you also prepare five additional variations?"
+
+The system should identify a potential deliverable/quantity change.
+
+It should not silently modify the original agreement.
+
+### Scope change result
+
+Display:
+
+- Original confirmed term.
+- Newly detected request.
+- Source message.
+- Change category.
+- Explanation.
+- Review status.
+
+Use statuses such as:
+
+- No material change detected.
+- Potential scope change.
+- Needs human review.
+- Addendum required.
+- Addendum accepted.
+- Addendum rejected.
+
+Never automatically accuse a client of wrongdoing.
+
+Never treat every new message as a confirmed change.
+
+### Addendum workflow
+
+If a change is accepted:
+
+1. Create a proposed addendum.
+2. Show the original term.
+3. Show the proposed change.
+4. Explain the difference.
+5. Allow the freelancer to set any additional fee or timeline.
+6. Require both parties to review and confirm.
+7. Create a new immutable agreement version or linked addendum.
+8. Generate a new fingerprint.
+9. Preserve the original agreement and previous receipts.
+10. If an additional payment is required, create a separate milestone.
+
+Do not retroactively change an already captured payment.
+
+---
+
+## STAGE 14 — SETTINGS AND SECURITY
+
+Create a settings page with:
+
+### Profile
+- Name.
+- Email.
+- Account information.
+
+### Integrations
+- Firebase authentication status.
+- Gemini configuration status.
+- PayPal Sandbox configuration status.
+
+Show accurate status only.
+
+### Security
+- Session information.
+- Account security information.
+- Signing key information where safe to display.
+- Verification key information.
+
+Never display private secrets.
+
+### Preferences
+- Notification preferences where implemented.
+- Timezone/display preferences where implemented.
+
+Do not show decorative controls that do nothing.
+
+---
+
+# 7. DATABASE DESIGN
+
+Create a clear, scalable Firestore data model.
+
+At minimum, model:
+
+- users
+- userProfiles
+- projects
+- clients
+- conversations
+- conversationMessages
+- agreements
+- agreementVersions
+- agreementEvidence
+- partyConfirmations
+- paymentMilestones
+- paymentOrders
+- paymentCaptures
+- paymentEvents
+- receipts
+- signingKeys or signingKeyReferences
+- scopeAnalyses
+- addenda
+- notifications
+- auditEvents
+
+Use document relationships and references consistently.
+
+Every private record must have an ownership model.
+
+Every API operation must validate authorization.
+
+Use Firestore security rules that deny access by default and explicitly allow only the intended owner or authorized client access.
+
+Do not rely on frontend route protection as a security boundary.
+
+Use Firebase Admin SDK only in trusted server-side code.
+
+Create database indexes when required.
+
+Use transactions or other appropriate atomic operations for operations that must remain consistent, such as payment milestone updates and confirmation records.
+
+Avoid race conditions and duplicate writes.
+
+---
+
+# 8. BACKEND API DESIGN
+
+Create organized REST endpoints for:
+
+### Authentication/session
+- Current user.
+- Session validation.
+
+### Projects
+- Create.
+- List.
+- Read.
+- Update.
+- Archive.
+
+### Conversations
+- Create.
+- Add messages.
+- Retrieve source messages.
+
+### AI extraction
+- Start extraction.
+- Retrieve extraction result.
+- Retry extraction.
+
+### Agreements
+- Create draft.
+- Read.
+- Update draft.
+- Create version.
+- Retrieve version history.
+- Generate fingerprint.
+
+### Client review
+- Create review invitation.
+- Validate review token.
+- Retrieve reviewable agreement.
+- Submit correction request.
+- Confirm agreement version.
+
+### Payments
+- Create PayPal order.
+- Verify approval.
+- Capture order.
+- Reconcile payment.
+- Retrieve payment history.
+- Process webhook events where configured.
+
+### Receipts
+- Generate signed receipt.
+- Retrieve receipt.
+- Verify receipt.
+- Retrieve public verification data.
+
+### Scope changes
+- Analyze new message.
+- Retrieve analysis.
+- Create addendum.
+- Confirm addendum.
+
+### System
+- Health check.
+- Integration readiness.
+- Configuration status.
+
+Use consistent response formats.
+
+Use appropriate HTTP status codes.
+
+Validate all request bodies.
+
+Add authentication and authorization middleware.
+
+Add centralized exception handling.
+
+Do not expose stack traces or secrets in production responses.
+
+---
+
+# 9. SECURITY AND FAILURE-RESILIENCE REQUIREMENTS
+
+Design the system to behave safely even under poor or unreliable conditions.
+
+### Missing environment variables
+
+If Firebase, Gemini, or PayPal configuration is missing:
+
+- The server must not crash unexpectedly.
+- Health checks should identify the missing configuration.
+- Unrelated features should remain usable where possible.
+- The affected feature should show a clear unavailable state.
+- No fake successful result should be returned.
+
+### Network instability
+
+Handle:
+
+- Request timeouts.
+- Failed API calls.
+- Interrupted requests.
+- Retry attempts.
+- Duplicate submissions.
+- Temporary service outages.
+
+Use safe retry logic.
+
+Never retry non-idempotent payment captures blindly.
+
+### Database failures
+
+- Display a clear error.
+- Avoid showing stale data as confirmed current data.
+- Do not silently lose agreement changes.
+- Preserve unsaved form content where practical.
+- Do not report a successful save until the database confirms it.
+
+### Authentication failures
+
+- Redirect unauthorized users appropriately.
+- Handle expired sessions.
+- Re-check server-side authorization.
+- Do not leak private records in error responses.
+
+### AI failures
+
+- Preserve the source conversation.
+- Show extraction status.
+- Permit retry.
+- Flag uncertain results.
+- Never invent supporting quotes.
+
+### Payment failures
+
+- Preserve the original order/payment event history.
+- Do not mark unpaid milestones as paid.
+- Prevent duplicate capture.
+- Reconcile actual provider state before updating internal payment status.
+
+### Cryptographic failures
+
+- Never silently bypass signature verification.
+- Never display a failed receipt as verified.
+- Clearly explain verification failure.
+
+### Browser and interface failures
+
+- Add React error boundaries.
+- Add loading states.
+- Add empty states.
+- Add recoverable error states.
+- Prevent accidental repeated actions.
+- Ensure responsive layout.
+- Ensure controls remain accessible by keyboard.
+
+---
+
+# 10. TESTING REQUIREMENTS
+
+Do not simply create test files. Run the tests.
+
+Report actual results.
+
+### Unit tests
+
+Test:
+
+- Agreement canonicalization.
+- SHA-256 fingerprint consistency.
+- Fingerprint changes when material terms change.
+- Evidence substring validation.
+- Missing evidence detection.
+- Conflicting evidence detection.
+- Currency and amount validation.
+- Payment state transitions.
+- Duplicate event prevention.
+- Ed25519 signing.
+- Ed25519 verification.
+- Modified receipt detection.
+- Scope change detection.
+- Authorization checks.
+
+### Integration tests
+
+Test:
+
+- API input validation.
+- Project ownership.
+- Agreement creation.
+- Agreement version creation.
+- Client confirmation.
+- Payment order creation with mocked provider responses where needed.
+- Payment reconciliation.
+- Receipt generation.
+- Receipt verification.
+- Addendum creation.
+
+Clearly distinguish mocked provider tests from actual PayPal Sandbox tests.
+
+### End-to-end tests
+
+Test the complete journey:
+
+1. Open landing page.
+2. Register or log in.
+3. Complete onboarding.
+4. Create a project.
+5. Add synthetic conversation messages.
+6. Run AI extraction.
+7. Review extracted terms.
+8. Inspect evidence.
+9. Save the agreement.
+10. Generate the fingerprint.
+11. Open client review.
+12. Confirm the exact agreement version.
+13. Check payment milestone eligibility.
+14. Create a PayPal Sandbox order if credentials are available.
+15. Approve and capture the payment if Sandbox is available.
+16. Reconcile the capture.
+17. Generate a receipt.
+18. Verify the receipt independently.
+19. Submit a new scope-changing message.
+20. Detect the potential change.
+21. Create and review an addendum.
+22. Confirm the new version.
+23. Verify that the original agreement and receipt remain unchanged.
+
+### Failure scenario tests
+
+Also test:
+
+- Missing Gemini key.
+- Missing PayPal credentials.
+- Firebase unavailable.
+- Invalid authentication token.
+- Expired review token.
+- Invalid project ownership.
+- Malformed conversation input.
+- Unsupported currency.
+- AI output containing invented evidence.
+- Conflicting source messages.
+- Duplicate payment request.
+- Duplicate webhook.
+- Failed PayPal capture.
+- Modified receipt payload.
+- Unknown public verification key.
+- Concurrent agreement updates.
+- Interrupted network request.
+
+For every test, report:
+
+- Test name.
+- Expected result.
+- Actual result.
+- PASS or FAIL.
+- Explanation of any failure.
+
+Never report a test as PASS unless it was actually executed successfully.
+
+If the environment prevents a test from running, mark it BLOCKED and explain why.
+
+---
+
+# 11. IMPLEMENTATION AND CODE QUALITY
+
+Organize the codebase into logical modules.
+
+Suggested structure:
+
+- `src/components`
+- `src/pages`
+- `src/layouts`
+- `src/hooks`
+- `src/services`
+- `src/utils`
+- `src/types`
+- `src/context`
+- `src/styles`
+- `server/routes`
+- `server/controllers`
+- `server/services`
+- `server/middleware`
+- `server/utils`
+- `server/config`
+- `server/types`
+- `tests/unit`
+- `tests/integration`
+- `tests/e2e`
+
+Adapt the existing project structure when appropriate instead of creating unnecessary duplicate files.
+
+Requirements:
+
+- Strict TypeScript where feasible.
+- Avoid `any` unless justified.
+- Avoid duplicated business logic.
+- Keep payment logic separate from UI.
+- Keep AI extraction separate from UI.
+- Keep cryptographic signing separate from UI.
+- Use shared types where appropriate.
+- Validate untrusted input.
+- Avoid circular dependencies.
+- Avoid unnecessary dependencies.
+- Remove dead code.
+- Remove unused imports.
+- Keep environment configuration documented.
+- Keep secrets out of source control.
+
+Use `.env.example` with placeholder variable names only.
+
+Never write real credentials into `.env.example`.
+
+Never commit `.env`.
+
+---
+
+# 12. DEMO EXPERIENCE
+
+Create a reliable demonstration mode using the official synthetic scenario.
+
+The demo should help a judge understand the product without needing to configure every external service.
+
+However, distinguish carefully between:
+
+1. Real functionality.
+2. Synthetic demonstration data.
+3. Mocked integration responses.
+4. Unconfigured external services.
+
+For example:
+
+- Synthetic conversation: allowed.
+- Synthetic project: allowed.
+- Synthetic extracted evidence: allowed if it is traceable to the synthetic source messages.
+- Synthetic payment example: allowed if clearly labelled.
+- Fake PayPal capture represented as real: prohibited.
+- Fake client confirmation represented as an actual client action: prohibited.
+- Fake digital signature represented as a valid production signature: prohibited.
+
+If a demo simulation is necessary, visibly label it as a simulation and keep it separate from real account records.
+
+The demo should show the complete product logic even when live external integrations are unavailable, without misleading the viewer about what actually happened.
+
+---
+
+# 13. REQUIRED DOCUMENTATION
+
+Create a complete README containing:
+
+1. Product overview.
+2. Main features.
+3. Architecture.
+4. Technology stack.
+5. Project structure.
+6. Prerequisites.
+7. Installation.
+8. Environment variables.
+9. Firebase setup.
+10. Firestore rules and indexes.
+11. Gemini setup.
+12. PayPal Sandbox setup.
+13. Local development.
+14. Test commands.
+15. Production build.
+16. Deployment guidance.
+17. Demo instructions.
+18. Security considerations.
+19. Known limitations.
+20. Troubleshooting.
+
+Also document:
+
+- API endpoints.
+- Database collections.
+- Payment lifecycle.
+- Agreement versioning.
+- Fingerprint generation.
+- Receipt signing and verification.
+- Scope change workflow.
+
+Never document a feature as implemented if it is only planned.
+
+---
+
+# 14. FINAL ACCEPTANCE CRITERIA
+
+The project is not complete merely because the frontend looks good.
+
+The following conditions must be evaluated.
+
+### Product
+- The full user journey exists.
+- The interface is responsive.
+- Important actions work.
+- Loading, empty, success, and error states exist.
+
+### Authentication
+- Real Firebase authentication works when configured.
+- Protected routes work.
+- Server-side authorization is enforced.
+
+### AI
+- Gemini calls occur server-side.
+- Extracted terms are validated against original messages.
+- Unsupported evidence is not marked verified.
+- AI failures are handled safely.
+
+### Agreements
+- Agreement drafts can be created and reviewed.
+- Versioning works.
+- Fingerprints are deterministic.
+- Confirmed versions cannot be silently overwritten.
+
+### Client confirmation
+- Secure review tokens are validated.
+- Confirmation is linked to the exact version.
+- Both parties must confirm the same version.
+
+### Payments
+- PayPal Sandbox integration works when configured.
+- Server-side payment reconciliation is implemented.
+- Duplicate captures are prevented.
+- Mocked transactions are never represented as actual captures.
+
+### Receipts
+- Receipts are generated after verified payment reconciliation.
+- Ed25519 signing works.
+- Independent signature verification works.
+- Modified payloads are rejected.
+
+### Scope changes
+- New messages can be compared with confirmed terms.
+- Potential changes are explained.
+- Addenda preserve the original agreement.
+- New payment milestones require proper confirmation.
+
+### Reliability
+- Missing credentials do not crash unrelated features.
+- Network failures are handled.
+- Database failures are handled.
+- Invalid requests are rejected.
+- Sensitive information is protected.
+
+### Testing
+- TypeScript check runs.
+- Production build runs.
+- Unit tests run.
+- Integration tests run where supported.
+- End-to-end tests run where supported.
+- Actual results are reported honestly.
+
+---
+
+# 15. EXECUTION INSTRUCTIONS — FOLLOW STRICTLY
+
+You must now inspect the current workspace and implement the complete application.
+
+Follow this execution order:
+
+**Phase A — Inspect and plan**
+1. Inspect the current files.
+2. Understand the existing framework and dependencies.
+3. Identify existing functionality.
+4. Identify missing functionality.
+5. Check environment configuration.
+6. Avoid destroying working code unnecessarily.
+7. Create a concise implementation plan.
+
+**Phase B — Build the foundation**
+1. Establish the application architecture.
+2. Configure frontend and backend.
+3. Configure routing.
+4. Configure shared types.
+5. Configure environment handling.
+6. Configure Firebase integration.
+7. Implement the design system.
+8. Implement the application shell.
+
+**Phase C — Implement core functionality**
+1. Authentication.
+2. Onboarding.
+3. Dashboard.
+4. Project management.
+5. Conversation intake.
+6. AI extraction.
+7. Evidence validation.
+8. Agreement review.
+9. Versioning and fingerprinting.
+10. Client confirmation.
+
+**Phase D — Implement financial and verification functionality**
+1. PayPal Sandbox integration.
+2. Payment milestones.
+3. Server-side reconciliation.
+4. Digital receipts.
+5. Ed25519 signatures.
+6. Independent verification.
+7. Scope change detection.
+8. Addenda and additional milestones.
+
+**Phase E — Hardening**
+1. Security checks.
+2. Failure handling.
+3. Database rules.
+4. Input validation.
+5. Duplicate event prevention.
+6. Responsive UI.
+7. Accessibility.
+8. Logging without secrets.
+
+**Phase F — Verify**
+1. Run TypeScript checks.
+2. Run unit tests.
+3. Run integration tests.
+4. Run end-to-end tests where possible.
+5. Run production build.
+6. Fix discovered errors.
+7. Re-run failed tests.
+8. Inspect the final interface.
+
+Do not stop after writing a plan. Continue implementing.
+
+If the environment has execution or time limitations, prioritize a coherent, working end-to-end core rather than superficial implementation of every feature.
+
+The minimum viable end-to-end core must include:
+
+- Project creation.
+- Conversation intake.
+- Evidence-backed agreement extraction.
+- Agreement review.
+- Deterministic fingerprint.
+- Two-party version-specific confirmation.
+- PayPal Sandbox order and capture flow when configured.
+- Server-side payment reconciliation.
+- Signed receipt.
+- Independent verification.
+- Scope change detection.
+- Addendum/version preservation.
+
+Do not create fake implementations to make the checklist look complete.
+
+When a feature cannot be completed because a credential, service, or environment capability is missing, implement the surrounding architecture, display its real status, document the missing requirement, and keep unrelated functionality operational.
+
+---
+
+# 16. FINAL RESPONSE REQUIRED FROM YOU
+
+When implementation is finished, provide a concise but complete engineering report containing:
+
+1. What was actually implemented.
+2. Main files created or modified.
+3. Features that are fully functional.
+4. Features requiring external configuration.
+5. Features using mock or synthetic data.
+6. Security measures implemented.
+7. Tests actually executed.
+8. Exact PASS/FAIL/BLOCKED results.
+9. Production build result.
+10. Known bugs or limitations.
+11. Exact steps required to run the project.
+12. Any critical issue that could prevent a live demonstration.
+
+Do not claim perfection.
+
+Do not hide failures.
+
+Do not say "everything works" without evidence.
+
+**Your objective is to deliver the most reliable, complete, honest, and demonstrable version of ScopeSnap possible within the available environment and time. Start by inspecting the project, then build.**

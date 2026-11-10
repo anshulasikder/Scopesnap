@@ -1,0 +1,6 @@
+{
+  "name": "ScopeSnap",
+  "description": "AI-powered freelancer agreement clarity and payment milestone platform with tamper-evident cryptographic receipts and scope change detection.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

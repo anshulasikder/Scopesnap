@@ -1,0 +1,26 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --color-ink: #151C1B;
+    --color-paper: #F4F1E8;
+    --color-lime: #D9F36A;
+    --color-teal: #648D83;
+    --color-coral: #E77B64;
+    --color-grey: #9A9F98;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: #151C1B;
+    color: #F4F1E8;
+  }
+
+  h1, h2, h3, .font-heading {
+    font-family: 'Space Grotesk', sans-serif;
+  }
+
+  code, pre, .font-mono {
+    font-family: 'IBM Plex Mono', monospace;
+  }
+}

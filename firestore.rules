@@ -1,0 +1,62 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // Default deny all access
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // User profiles: owner only
+    match /userProfiles/{userId} {
+      allow read: if isOwner(userId);
+      allow create, update: if isOwner(userId);
+      allow delete: if false;
+    }
+
+    // Projects: user scoped
+    match /projects/{projectId} {
+      allow read: if isAuthenticated() && resource.data.userId == request.auth.uid;
+      allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid;
+      allow update: if isAuthenticated() && resource.data.userId == request.auth.uid;
+      allow delete: if false; // Soft archive only
+    }
+
+    // Agreements: owner or client review access
+    match /agreements/{agreementId} {
+      allow read: if (isAuthenticated() && resource.data.userId == request.auth.uid) ||
+                     (resource.data.reviewToken != null && request.auth != null);
+      allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid;
+      allow update: if isAuthenticated() && resource.data.userId == request.auth.uid;
+      allow delete: if false; // Agreements are immutable/versioned
+    }
+
+    // Payment milestones
+    match /paymentMilestones/{milestoneId} {
+      allow read: if isAuthenticated();
+      // Server-side writes only for payment status transitions
+      allow write: if false;
+    }
+
+    // Signed digital receipts: publicly verifiable read by receiptId, write only via trusted server
+    match /receipts/{receiptId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // Audit logs: write-only server side, read by project owner
+    match /auditEvents/{eventId} {
+      allow read: if isAuthenticated() && resource.data.userId == request.auth.uid;
+      allow write: if false;
+    }
+  }
+}
